@@ -13,7 +13,9 @@
     <div id="app">
         <div class="container">
             <Header>{{message}}</Header>
-            <div class="loginform">
+            <!-- Login div  -->
+            <h2>{{loginError}}</h2>
+            <div v-if="needLogin" class="loginform">
                 <div class="form-group mb-2">
                     <label for="email">Email</label>
                     <input v-model="email" type="email" id="email" class="form-control" required>
@@ -23,7 +25,15 @@
                     <input v-model="password" type="password" id="password" class="form-control" required>
                   </div>
                   <button @click="anprLogin()"class="btn btn-dark">Login</button>
-            </div>         
+                  
+            </div>
+            <!-- application div -->
+            <div v-else>
+                <h1>application div</h1>
+                <p>{{myToken}}<p>
+            </div>  
+             
+            <!-- <button @click="swapFunction()">switch</button> -->
         </div>        
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
