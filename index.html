@@ -11,29 +11,45 @@
 </head>
 <body>
     <div id="app">
-        <div class="container">
+        <div class="container mt-4">
             <Header>{{message}}</Header>
             <!-- Login div  -->
             <h2>{{loginError}}</h2>
-            <div v-if="needLogin" class="loginform">
+            <div v-if="needLogin" class="loginform">     
                 <div class="form-group mb-2">
                     <label for="email">Email</label>
                     <input v-model="email" type="email" id="email" class="form-control" required>
-                  </div>
-                  <div class="form-group mb-2">
+                </div>
+                <div class="form-group mb-2">
                     <label for="password">Password</label>
                     <input v-model="password" type="password" id="password" class="form-control" required>
-                  </div>
-                  <button @click="anprLogin()"class="btn btn-dark">Login</button>
+                </div>
+                  <button @click="Login()" class="btn btn-dark mb-4">Login</button>
                   
             </div>
             <!-- application div -->
             <div v-else>
-                <h1>application div</h1>
-                <p>{{myToken}}<p>
-            </div>  
-             
-            <!-- <button @click="swapFunction()">switch</button> -->
+                <div class="row anpr">
+                    <div class="upload col-sm-6">
+                        <p>upload files</p>
+                        <input type="file" accept="image/*" @change="uploadImage($event)" id="file-input">
+                        <div class="preview">
+                            <img id="upload-preview" class="imagePreview">
+                        </div>
+                    </div>
+                    <div class="camera col-sm-6">
+                        <p>Take a picture from your camera</p>                        
+                        <input type='file' v-model="cameraImage" name="cameraImage" accept="image/*" capture="camera" id="imgInp" />  
+                    </div>    
+                </div>                
+                <button @click="submitQuery" class="btn btn-dark mb-4">Submit Query</button> 
+
+                <div v-if="showResult" class="result">
+                    <h6 v-if="responseWithAlert" class="vehiclehit">Vehicle Hit</h6>
+                    <h6 v-else class="vehicleread">Vehicle Read</h6>
+                </div>
+
+            </div>           
         </div>        
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>

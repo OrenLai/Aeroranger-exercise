@@ -1,21 +1,75 @@
+/* body{
+    background-image: url('anprIMG.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    color:white;
+} */
+
 Header{
     margin: 0 auto;
     text-align: center;
-    margin: 50px auto;
+    margin: 40px auto 30px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-weight: 800;
     font-size:xx-large;
     color:#F78812;
+    text-decoration: underline;
+    /* color:white; */
 }
 
 h2{
     color:red
 }
+
+p{
+    margin-top: 10px;
+    text-decoration: underline;
+}
+
 .container{
+    width: 50%;
     text-align: center;
+    border: 3px solid black;
+
 }
 
 .loginform{
     width: 25%;
     margin: 0 auto;
+}
+
+.anpr{
+    display: flex;
+    justify-content:space-evenly;
+    text-align: center;
+}
+
+.upload{
+    height: 300px;
+    border: 1px solid black;
+    border-right: none;
+    border-left:none;
+    margin: 20px auto;
+}
+.camera{
+    height: 300px;
+    border: 1px solid black;
+    margin: 20px auto;
+    border-right:none;
+}
+
+.vehiclehit{
+    background-color: palevioletred;
+    color:white;
+}
+
+.vehicleread{
+    background-color: green;
+    color: yellow;
+}
+
+.imagePreview{
+    max-width: 100%;
+    max-height:200px;
+    
 }
