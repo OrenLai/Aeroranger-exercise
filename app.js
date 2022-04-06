@@ -2,17 +2,20 @@ Vue.createApp({
   data() {
     return {
       message: 'Welcome to Aero Ranger ANPR system',
+      //login part variables 
       email: '',
       password: '',
       needLogin: true,
       myToken: '',
       loginError: '',
+      // upload part variables 
       item:{
         uploadImage:null,
         imageUrl:null
       },
       previewImage:null,    
       cameraImage:null,
+      //response display part variables
       responseWithAlert: false,
       queryResponse:null,
       showResult:false
@@ -80,9 +83,10 @@ Vue.createApp({
         if(event.target.files.length > 0){
           this.item.uploadImage = event.target.files[0]
           var src = URL.createObjectURL(event.target.files[0]);
+          //use DOM object to add src to the img element
           var preview = document.getElementById("upload-preview");
           preview.src = src;
         }
     }
-    },    
+  },    
 }).mount('#app')
