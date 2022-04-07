@@ -58,6 +58,11 @@ p{
     border-right:none;
 }
 
+.queryerror{
+    background-color: black;
+    color: red;
+}
+
 .vehiclehit{
     background-color: palevioletred;
     color:white;
@@ -70,6 +75,16 @@ p{
 
 .imagePreview{
     max-width: 100%;
-    max-height:200px;
-    
+    max-height:200px;    
 }
+
+.card-img-top{
+    width:200px;
+    height:200px;
+    margin: 0 auto;
+}
+.card{
+    text-align: center;
+    font-weight: 800;
+}
+

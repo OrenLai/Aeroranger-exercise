@@ -15,10 +15,18 @@ Vue.createApp({
       },
       previewImage:null,    
       cameraImage:null,
-      //response display part variables
+      //result display variables
+      showResult:false,
       responseWithAlert: false,
-      queryResponse:null,
-      showResult:false
+      queryError:false,
+      queryErrorMsg:"",
+      //anpr info
+      make:"",
+      model:"",
+      color:"",
+      plate:"",
+      imageUrl:""
+
     }
   },methods:{
 
@@ -63,18 +71,28 @@ Vue.createApp({
 
       try {
         const {data} = await axios.post(url, formdata, {headers:headers})        
-         this.showResult = true
-
+         this.showResult = true         
+         this.queryError = false
+        // check vehicle hit/alert or vehicle read
          if(data.alerts != null){
-           console.log(data.alerts);
            this.responseWithAlert = true
            console.log(this.responseWithAlert);
          }
+         // store relevent data for display         
+        this.make = data.vehicleMake
+        this.model = data.vehicleModel
+        this.color = data.vehicleColour
+        this.plate = data.plate
+        this.imageUrl = data.image
 
-         console.log(this.showResult);
-      } catch (error) {        
-        const errMsg = error.response.data.error.message
-        console.log(errMsg);
+      } catch (error) {     
+        this.showResult = true   
+        if (error.response){
+          this.queryError = true
+          this.queryErrorMsg = error.response.data.error 
+          console.log(this.queryError);
+          console.log(this.queryErrorMsg);
+        }           
       }  
     },
     
