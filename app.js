@@ -13,8 +13,7 @@ Vue.createApp({
         uploadImage:null,
         imageUrl:null
       },
-      previewImage:null,    
-      cameraImage:null,
+      resizedFile:null,
       //result display variables
       showResult:false,
       responseWithAlert: false,
@@ -51,12 +50,11 @@ Vue.createApp({
         console.log(loginError);
       }      
      },
-    
-    async submitQuery(){
-    //send post request to the api endpoint with JWT token 
-    // console.log('submit query');
 
-      const url = 'https://dashboard.api-aeroranger.com/api/v1/plates/upload-pr'; 
+     
+    //send post request to the api endpoint with JWT token 
+     async submitQuery(){        
+       const url = 'https://dashboard.api-aeroranger.com/api/v1/plates/upload-pr'; 
 
       //config headers
       const headers = {
@@ -66,6 +64,7 @@ Vue.createApp({
       //config form data
       let formdata = new FormData();
       formdata.append('image', this.item.uploadImage)
+      // formdata.append('image', this.resizedFile)
       formdata.append('latitude','0')
       formdata.append('longitude','0')
 
@@ -90,14 +89,52 @@ Vue.createApp({
         if (error.response){
           this.queryError = true
           this.queryErrorMsg = error.response.data.error 
-          console.log(this.queryError);
-          console.log(this.queryErrorMsg);
+          // console.log(this.queryError);
+          // console.log(this.queryErrorMsg);
         }           
       }  
     },
+    compressImgAndPreview(){
+      console.log("compress the image size");
+      const file = document.querySelector('#upload').files[0]
+      if(!file) return;
+     
+      console.log(file);
+      const reader = new FileReader();
+      reader.readAsDataURL(file)
+
+      reader.onload = function(event){
+        const imgElement = document.createElement("img");
+        imgElement.src = event.target.result;
+        document.getElementById("upload-preview").src = event.target.result;
+
+        imgElement.onload = function(e) {
+          const canvas = document.createElement("canvas");
+          const MAX_WIDTH = 200;
+          
+          const scaleSize = MAX_WIDTH / e.target.width;
+          canvas.width = MAX_WIDTH;
+          canvas.height = e.target.height * scaleSize;
+
+          const ctx = canvas.getContext('2d');
+          //draw the whole image to the canvas from the top-left , with the new width and height
+          ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height);
+          canvas.toBlob((blob) => {         
+            const resizedFile = new File([blob],"resizedimg.png")   
+            console.log(resizedFile);
+            this.resizedFile = resizedFile;
+          });
+          
+          // const srcEncoded = ctx.canvas.toDataURL(e.target, "image/png");
+          // document.querySelector("#upload-preview").src = srcEncoded
+          
+        }
+      }
+
+    },
     
-    uploadImage(event) {                
     //select upload image and display preview before uploading
+    uploadImage(event) {                    
         if(event.target.files.length > 0){
           this.item.uploadImage = event.target.files[0]
           var src = URL.createObjectURL(event.target.files[0]);

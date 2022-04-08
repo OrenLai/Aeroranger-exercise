@@ -32,15 +32,17 @@
                 <div class="row anpr">
                     <div class="upload col-sm-6">
                         <p>upload files</p>
-                        <input type="file" accept="image/*" @change="uploadImage($event)" id="file-input">
+                        <input type="file" accept="image/*" @change="uploadImage($event)" id="upload">
                         <div class="preview">
                             <img id="upload-preview" class="imagePreview">
                         </div>
+                        <button @click="compressImgAndPreview">Resize</button>
                     </div>
                     <div class="camera col-sm-6">
                         <p>Take a picture from your camera</p>                        
                         <input type='file' name="cameraImage" accept="image/*" capture="camera" id="cameraImage" />  
                     </div>    
+                    
                 </div>                
                 <button @click="submitQuery" class="btn btn-dark mb-4">Submit Query</button> 
 
