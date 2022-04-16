@@ -17,6 +17,7 @@ Vue.createApp({
       //result display variables
       showResult:false,
       responseWithAlert: false,
+      alertMessage:"",
       queryError:false,
       queryErrorMsg:"",
       //anpr info
@@ -25,7 +26,6 @@ Vue.createApp({
       color:"",
       plate:"",
       imageUrl:""
-
     }
   },methods:{
 
@@ -40,14 +40,17 @@ Vue.createApp({
       //make post request with the params
       try {
         const {data} = await axios.post(url, params)
+        // console.log(data);
         //switch the display from the login div to application div
         this.needLogin = false
+        //reset the error message
+        this.loginError = ""
         //store token
         this.myToken = 'Bearer '+data.id_token
       } catch (error) {
         // const errorMessage = error.response.data.error.message       
         this.loginError = error.response.data.error.message + ', please try again'
-        console.log(loginError);
+        console.log(this.loginError);
       }      
      },
 
@@ -69,14 +72,20 @@ Vue.createApp({
       formdata.append('longitude','0')
 
       try {
-        const {data} = await axios.post(url, formdata, {headers:headers})        
+        const {data} = await axios.post(url, formdata, {headers:headers})
+        console.log(data);        
          this.showResult = true         
          this.queryError = false
         // check vehicle hit/alert or vehicle read
-         if(data.alerts != null){
+         if(data.alerts.length > 0){
            this.responseWithAlert = true
-           console.log(this.responseWithAlert);
+           this.alertMessage = data.alerts[0].category                               
+          //  console.log(this.alertMessage);
+         }else{
+          this.responseWithAlert = false
+          this.alertMessage = ""
          }
+
          // store relevent data for display         
         this.make = data.vehicleMake
         this.model = data.vehicleModel
@@ -126,9 +135,8 @@ Vue.createApp({
           });
           
           // const srcEncoded = ctx.canvas.toDataURL(e.target, "image/png");
-          // document.querySelector("#upload-preview").src = srcEncoded
-          
-        }
+          // document.querySelector("#img-resized").src = srcEncoded
+          }
       }
 
     },

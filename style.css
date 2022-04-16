@@ -64,16 +64,19 @@ p{
     color: red;
 }
 
-.vehiclehit{
+.vehicle-hit{
     background-color: palevioletred;
     color:white;
 }
 
-.vehicleread{
+.vehicle-read{
     background-color: green;
     color: yellow;
 }
 
+.alert-message{
+    color:red;
+}
 .imagePreview{
     max-width: 100%;
     max-height:200px;    

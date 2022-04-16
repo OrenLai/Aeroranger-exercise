@@ -9,7 +9,10 @@
     
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    
     <div id="app">
         <div class="container mt-4">
             <Header>{{message}}</Header>
@@ -40,7 +43,7 @@
                     </div>
                     <div class="camera col-sm-6">
                         <p>Take a picture from your camera</p>                        
-                        <input type='file' name="cameraImage" accept="image/*" capture="camera" id="cameraImage" />  
+                        <input type='file' name="cameraImage" accept="image/*" capture="camera" @change="uploadImage($event)" id="cameraImage" />  
                     </div>    
                     
                 </div>                
@@ -48,8 +51,10 @@
 
                 <div v-if="showResult" class="result">
                     <h6 v-if="queryError" class="queryerror">{{queryErrorMsg}}</h6>
-                    <h6 v-else-if="responseWithAlert" class="vehiclehit">Vehicle Hit</h6>                   
-                    <h6 v-else class="vehicleread">Vehicle Read</h6>
+                    <!-- <h6 v-else-if="responseWithAlert" class="vehicleHit">Vehicle Hit</h6>                    -->
+                    <h6 v-else-if="responseWithAlert" class="vehicle-hit">Vehicle Hit</h6>
+                    <h6 v-else class="vehicle-read">Vehicle Read</h6>
+                    <h6 v-if="alertMessage.length > 0" class="alert-message">{{alertMessage}}</h6>
                     <!-- display relevent information with bootstrap cards if no error-->
                     <div v-if="!queryError" class="card">
                         <img class="card-img-top" v-bind:src="imageUrl" alt="Card image cap">
@@ -65,7 +70,7 @@
             </div>           
         </div>        
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>    
     <script src="app.js"></script>
 </body>
